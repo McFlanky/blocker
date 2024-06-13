@@ -64,6 +64,12 @@ func TestPostUser(t *testing.T) {
 	}
 	var user types.User
 	json.NewDecoder(resp.Body).Decode(&user)
+	if len(user.ID) == 0 {
+		t.Errorf("expected a user ID to be set")
+	}
+	if len(user.EncryptedPassword) > 0 {
+		t.Errorf("expected encrypted password not to be included in json response")
+	}
 	if user.FirstName != params.FirstName {
 		t.Errorf("expected username: %s but got: %s", params.FirstName, user.FirstName)
 	}
