@@ -19,6 +19,11 @@ Installing mongodb client
 go get go.mongodb.org/mongo-driver/mongo
 ```           
 
+Start MongoDB
+```
+sudo systemctl start mongod
+```
+
 ### Go Fiber
 ```
 https://gofiber.io
@@ -34,3 +39,4 @@ go get github.com/gofiber/fiber/v2
 ```
 docker run --name mongodb -d mongo:latest -p 27017:27017
 ```
+

@@ -14,8 +14,8 @@ type RoomType int
 const (
 	SingleRoomType RoomType = iota + 1
 	DoubleRoomType
-	SeaSideRoomType
 	DeluxeRoomType
+	SeaSideRoomType
 )
 
 type Room struct {
