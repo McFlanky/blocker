@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/McFlanky/hotel-reservations-api/api"
+	"github.com/McFlanky/hotel-reservations-api/api/middleware"
 	"github.com/McFlanky/hotel-reservations-api/db"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -38,10 +39,16 @@ func main() {
 		}
 		userHandler  = api.NewUserHandler(userStore)
 		hotelHandler = api.NewHotelHandler(store)
+		authHandler  = api.NewAuthHandler(userStore)
 		app          = fiber.New(config)
-		apiv1        = app.Group("api/v1")
+		auth         = app.Group("/api")
+		apiv1        = app.Group("/api/v1", middleware.JWTAuthentication)
 	)
 
+	// auth handlers
+	auth.Post("/auth", authHandler.HandleAuthenticate)
+
+	// ------------- VERSIONED API ROUTES ----------------
 	// user handlers
 	apiv1.Get("/user", userHandler.HandleGetUsers)
 	apiv1.Get("/user/:id", userHandler.HandleGetUser)
