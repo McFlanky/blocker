@@ -3,43 +3,51 @@ package middleware
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
 
 func JWTAuthentication(c *fiber.Ctx) error {
-	fmt.Println("-- JWT auth")
-
 	token := c.Get("X-Api-Token")
 	if len(token) == 0 {
+		fmt.Println("token not present in the header", token)
 		return fmt.Errorf("unauthorized")
 	}
-
-	if err := parseToken(token); err != nil {
+	claims, err := validateToken(token)
+	if err != nil {
 		return err
 	}
-
-	fmt.Println("token:", token)
-	return nil
+	expiresFloat := claims["expires"].(float64)
+	expires := int64(expiresFloat)
+	// check token expiration
+	if time.Now().Unix() > expires {
+		return fmt.Errorf("token expired")
+	}
+	return c.Next()
 }
 
-func parseToken(tokenStr string) error {
+func validateToken(tokenStr string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			fmt.Println("invalid signing method", token.Header["alg"])
 			return nil, fmt.Errorf("unauthorized")
 		}
 		secret := os.Getenv("JWT_SECRET")
-		fmt.Println("Never print secret: ", secret)
 		return []byte(secret), nil
 	})
 	if err != nil {
 		fmt.Println("error parsing JWT token:", err)
-		return fmt.Errorf("unauthorized")
+		return nil, fmt.Errorf("unauthorized")
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		fmt.Println(claims)
+	if !token.Valid {
+		fmt.Println("invalid token")
+		return nil, fmt.Errorf("unauthorized")
 	}
-	return fmt.Errorf("unauthorized")
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return nil, fmt.Errorf("unauthorized")
+	}
+	return claims, nil
 }
