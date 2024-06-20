@@ -18,6 +18,7 @@ type Dropper interface {
 
 type UserStore interface {
 	Dropper
+
 	GetUserByID(context.Context, string) (*types.User, error)
 	GetUsers(context.Context) ([]*types.User, error)
 	InsertUser(context.Context, *types.User) (*types.User, error)
