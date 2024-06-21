@@ -1,6 +1,21 @@
 package api
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+	"reflect"
+
+	"github.com/gofiber/fiber/v2"
+)
+
+func ErrorHandler(c *fiber.Ctx, err error) error {
+	fmt.Println(reflect.TypeOf(err))
+	if apiError, ok := err.(Error); ok {
+		return c.Status(apiError.Code).JSON(apiError)
+	}
+	apiError := NewError(http.StatusInternalServerError, err.Error())
+	return c.Status(apiError.Code).JSON(apiError)
+}
 
 type Error struct {
 	Code int    `json:"code"`
@@ -25,9 +40,24 @@ func ErrUnauthorized() Error {
 		Err:  "unauthorized request",
 	}
 }
+
 func ErrInvalidID() Error {
 	return Error{
 		Code: http.StatusBadRequest,
 		Err:  "invalid id given",
+	}
+}
+
+func ErrBadRequest() Error {
+	return Error{
+		Code: http.StatusBadRequest,
+		Err:  "invalid JSON request",
+	}
+}
+
+func ErrResourceNotFound(res string) Error {
+	return Error{
+		Code: http.StatusNotFound,
+		Err:  res + " resource not found",
 	}
 }
