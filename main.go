@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
+	"net/http"
 
 	"github.com/McFlanky/hotel-reservations-api/api"
 	"github.com/McFlanky/hotel-reservations-api/api/middleware"
@@ -15,12 +16,14 @@ import (
 
 var config = fiber.Config{
 	ErrorHandler: func(c *fiber.Ctx, err error) error {
-		return c.JSON(map[string]string{"error": err.Error()})
+		if apiError, ok := err.(api.Error); ok {
+			return c.Status(apiError.Code).JSON(apiError)
+		}
+		return api.NewError(http.StatusInternalServerError, err.Error())
 	},
 }
 
 func main() {
-	// 2024-06-16 15:52:43.451410759 -0400 EDT m=+0.000754701
 	listenAddr := flag.String("listenAddr", ":8000", "listen address to API server")
 	flag.Parse()
 
@@ -54,6 +57,9 @@ func main() {
 	// auth handlers
 	auth.Post("/auth", authHandler.HandleAuthenticate)
 
+	// admin handlers
+	admin.Get("/booking", bookingHandler.HandleGetBookings)
+
 	// ------------- VERSIONED API ROUTES ----------------
 	// user handlers
 	apiv1.Get("/user", userHandler.HandleGetUsers)
@@ -70,14 +76,10 @@ func main() {
 	// room handlers
 	apiv1.Get("/room", roomHandler.HandleGetRooms)
 	apiv1.Post("/room/:id/book", roomHandler.HandleBookRoom)
-	// TODO: cancel booking
 
 	// booking handlers
 	apiv1.Get("/booking/:id", bookingHandler.HandleGetBooking)
 	apiv1.Get("/booking/:id/cancel", bookingHandler.HandleCancelBooking)
-
-	// admin handlers
-	admin.Get("/booking", bookingHandler.HandleGetBookings)
 
 	app.Listen(*listenAddr)
 }
