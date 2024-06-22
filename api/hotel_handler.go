@@ -41,7 +41,11 @@ func (h *HotelHandler) HandleGetHotel(c *fiber.Ctx) error {
 }
 
 func (h *HotelHandler) HandleGetHotels(c *fiber.Ctx) error {
-	hotels, err := h.store.Hotel.GetHotels(c.Context(), nil)
+	var pagination db.Pagination
+	if err := c.QueryParser(&pagination); err != nil {
+		return ErrBadRequest()
+	}
+	hotels, err := h.store.Hotel.GetHotels(c.Context(), nil, &pagination)
 	if err != nil {
 		return ErrResourceNotFound("hotels")
 	}
