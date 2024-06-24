@@ -28,7 +28,7 @@ https://mongodb.com/docs/drivers/go/current/quick-start
 go get go.mongodb.org/mongo-driver/mongo
 ```           
 
-#### Start MongoDB ->
+#### Start MongoDB 
 ```
 sudo systemctl start mongod
 ```
