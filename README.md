@@ -18,7 +18,7 @@ MONGO_DB_URL_TEST=mongodb://localhost:27017
 - Scripts -> DBMS -> seeding, migration
 
 ## Resources
-### MongoDB Driver
+### MongoDB Driver ->
 ``` 
 https://mongodb.com/docs/drivers/go/current/quick-start
 ```
@@ -28,12 +28,12 @@ https://mongodb.com/docs/drivers/go/current/quick-start
 go get go.mongodb.org/mongo-driver/mongo
 ```           
 
-#### Start MongoDB
+#### Start MongoDB ->
 ```
 sudo systemctl start mongod
 ```
 
-### Go Fiber
+### Go Fiber ->
 ```
 https://gofiber.io
 ```
@@ -43,7 +43,7 @@ https://gofiber.io
 go get github.com/gofiber/fiber/v2
 ```
 
-### Docker
+### Docker ->
 #### Installing MongoDB as a Docker container
 ```
 docker run --name mongodb -d mongo:latest -p 27017:27017
