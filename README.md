@@ -23,7 +23,7 @@ MONGO_DB_URL_TEST=mongodb://localhost:27017
 https://mongodb.com/docs/drivers/go/current/quick-start
 ```
 
-Installing mongodb client
+Installing MongoDB client
 ```
 go get go.mongodb.org/mongo-driver/mongo
 ```           
@@ -44,7 +44,7 @@ go get github.com/gofiber/fiber/v2
 ```
 
 ### Docker
-### Installing MongoDB as a Docker container
+#### Installing MongoDB as a Docker container
 ```
 docker run --name mongodb -d mongo:latest -p 27017:27017
 ```
