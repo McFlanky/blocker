@@ -23,12 +23,12 @@ MONGO_DB_URL_TEST=mongodb://localhost:27017
 https://mongodb.com/docs/drivers/go/current/quick-start
 ```
 
-Installing MongoDB client
+#### Installing MongoDB client
 ```
 go get go.mongodb.org/mongo-driver/mongo
 ```           
 
-Start MongoDB
+#### Start MongoDB
 ```
 sudo systemctl start mongod
 ```
@@ -38,7 +38,7 @@ sudo systemctl start mongod
 https://gofiber.io
 ```
 
-Installing gofiber
+#### Installing Go Fiber
 ```
 go get github.com/gofiber/fiber/v2
 ```
