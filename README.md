@@ -1,5 +1,13 @@
 # Hotel Reservation backend
 
+## Project Outline
+- Users -> book room from hotel
+- Admins -> going to check reservations/bookings
+- Authentication/Authorization -> JWT 
+- Hotels -> CRUD API -> JSON
+- Admins -> CRUD API -> JSON
+- Scripts -> DBMS -> seeding, migration
+
 ### Project Environment Variables
 ```
 HTTP_LISTEN_ADDRESS=:8000
@@ -8,14 +16,6 @@ MONGO_DB_NAME=hotel-reservation
 MONGO_DB_URL=mongodb://localhost:27017
 MONGO_DB_URL_TEST=mongodb://localhost:27017
 ```
-
-## Project Outline
-- Users -> book room from hotel
-- Admins -> going to check reservations/bookings
-- Authentication/Authorization -> JWT 
-- Hotels -> CRUD API -> JSON
-- Admins -> CRUD API -> JSON
-- Scripts -> DBMS -> seeding, migration
 
 ## Resources
 ### MongoDB Driver ->
