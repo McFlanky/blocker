@@ -1,15 +1,12 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
-	"reflect"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func ErrorHandler(c *fiber.Ctx, err error) error {
-	fmt.Println(reflect.TypeOf(err))
 	if apiError, ok := err.(Error); ok {
 		return c.Status(apiError.Code).JSON(apiError)
 	}

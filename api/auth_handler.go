@@ -47,7 +47,7 @@ func invalidCredentials(c *fiber.Ctx) error {
 }
 
 // A handler should only do:
-//   - serialize of the incoming request (JSON)
+//   - serialize the incoming request (JSON)
 //   - data fetching from db
 //   - call some business logic
 //   - return the data back to the user
