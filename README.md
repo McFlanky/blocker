@@ -1,6 +1,6 @@
 # Hotel Reservation backend
 
-# Project Environment Variables
+## Project Environment Variables
 ```
 HTTP_LISTEN_ADDRESS=:8000
 JWT_SECRET=somethingsupersecretthatnobodyknows
@@ -44,7 +44,7 @@ go get github.com/gofiber/fiber/v2
 ```
 
 ## Docker
-### Installing mongo db as a Docker container
+### Installing MongoDB as a Docker container
 ```
 docker run --name mongodb -d mongo:latest -p 27017:27017
 ```
