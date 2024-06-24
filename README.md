@@ -1,6 +1,6 @@
 # Hotel Reservation backend
 
-## Project Environment Variables
+### Project Environment Variables
 ```
 HTTP_LISTEN_ADDRESS=:8000
 JWT_SECRET=somethingsupersecretthatnobodyknows
